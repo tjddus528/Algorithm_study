@@ -1,3 +1,1 @@
-# Algorithm_study
-
-C++
+### Algorithm_study_C++
