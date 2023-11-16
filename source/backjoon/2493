@@ -1,0 +1,57 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+int N;
+stack<pair<int, int>> laser;
+int ans[500001];
+
+void find(int height, int i) {
+    int top_index = 0;
+    pair<int, int> temp;
+
+    if (i == 1) {
+        ans[i] = 0;
+    }
+    else {
+        if (laser.top().first > height) {
+            top_index = laser.top().second;
+            ans[i] = top_index;
+        } 
+        else {
+            while (!laser.empty() && laser.top().first < height) {
+                laser.pop();
+            }
+            if (laser.empty()) {
+                ans[i] = 0;
+            }
+            else {
+                top_index = laser.top().second;
+                ans[i] = top_index;
+            }
+        }
+    }
+
+
+}
+
+int main()
+{
+    int height;
+    
+    cin >> N;
+
+    for (int i = 1; i <= N; i++) {
+        cin >> height;
+        find(height, i);
+        laser.push(make_pair(height, i));
+    }
+
+    for (int i = 1; i <= N; i++) {
+        cout << ans[i] << " ";
+    }
+
+    return 0;
+}
+
