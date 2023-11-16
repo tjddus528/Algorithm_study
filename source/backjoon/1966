@@ -1,0 +1,74 @@
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int testcase, n, target_index;
+
+int ans[101];
+int index = 0;
+
+void solution(vector<int> priorities) {
+
+    int flag = 0;
+    
+    vector<int> answers; // 정렬된 결과 삽입
+    queue<int> printer;             // queue에 index 삽입
+    for (int i = 0; i < priorities.size(); i++) {
+        printer.push(i);
+    }
+
+    while (!printer.empty())
+    {
+        int current_index = printer.front();
+        printer.pop();
+
+        if (priorities[current_index] != *max_element(priorities.begin(), priorities.end())) {
+            printer.push(current_index);
+        }
+        else {
+            answers.push_back(current_index);
+            priorities[current_index] = 0;
+        }
+
+    }
+    for (int i = 0; i < n; i++) {
+        if (answers[i] == target_index) {
+            ans[index] = i + 1;
+            index++;
+            break;
+        }
+    }
+    
+}
+
+
+int main()
+{
+    cin >> testcase;
+    for (int j = 0; j < testcase; j++) {
+        
+        cin >> n;
+        cin >> target_index;
+        vector<pair<int, int>> answers;
+        vector<int> priorities;
+        
+        for (int i = 0; i < n; i++) {
+            int num;
+            cin >> num;
+            priorities.push_back(num);
+        }
+
+        solution(priorities);
+    }
+
+    for (int i = 0; i < index; i++) {
+        cout << ans[i] << '\n';
+    }
+    
+
+    return 0;
+}
+
